@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Lista de VMs{% endblock %}
+{% block content %}
+<h1>Lista de Máquinas Virtuais</h1>
+<table border="1">
+    <tr>
+        <th>Nome</th>
+        <th>ID</th>
+        <th>Estado</th>
+        <th>Ações</th>
+    </tr>
+    {% for vm in vms %}
+    <tr>
+        <td>{{ vm.name }}</td>
+        <td>{{ vm.id }}</td>
+        <td>
+            {% if vm.state == 1 %}
+                Em execução
+            {% else %}
+                Desligada
+            {% endif %}
+        </td>
+        <td>
+            {% if vm.state != 1 %}
+                <a href="{{ url_for('start_vm_route', vm_name=vm.name) }}">Iniciar</a>
+            {% else %}
+                <a href="{{ url_for('shutdown_vm_route', vm_name=vm.name) }}">Desligar</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
